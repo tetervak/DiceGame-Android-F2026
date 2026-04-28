@@ -1,3 +1,30 @@
 <resources>
-    <string name="app_name">DiceGame</string>
+    <string name="app_name">Dice Game</string>
+
+    <!-- Roller Screen -->
+    <string name="roll_button_label">Roll %d Dice</string>
+    <string name="roll_dice">Roll Dice</string>
+    <string name="reset_button_label">Reset</string>
+    <string name="roll_total_label">Roll Total:</string>
+    <string name="dice_image">dice image</string>
+    <string name="nav_roller_title">Dice Roller</string>
+    <string name="menu">Menu</string>
+    <string name="number_of_dice">Number of Dice</string>
+    <string name="timestamp_pattern">EEE, MMM dd, yyyy - h:mm:ss a</string>
+
+    <plurals name="not_rolled_message">
+        <item quantity="one">The Dice Is Not Rolled</item>
+        <item quantity="other">The Dice Are Not Rolled</item>
+    </plurals>
+
+    <string-array name="choices_of_numbers_of_dice">
+        <item>One Dice</item>
+        <item>Two Dice</item>
+        <item>Three Dice</item>
+        <item>Four Dice</item>
+    </string-array>
+
+    <string name="about_dice_game">About Dice Game</string>
+    <string name="programming_example">This is a programming example from an Android application development course.</string>
+    <string name="ok">OK</string>
 </resources>
