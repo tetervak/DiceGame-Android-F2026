@@ -2,7 +2,6 @@ package ca.tetervak.dicegame.ui.roller
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import ca.tetervak.dicegame.domain.RollData
 import ca.tetervak.dicegame.repository.PreferencesRepository
 import ca.tetervak.dicegame.repository.RollDataRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -10,7 +9,7 @@ import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import java.util.Date
 
@@ -25,34 +24,38 @@ class RollerViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            preferencesRepository.numberOfDiceFlow.collect { numberOfDice ->
-                _uiState.update { RollerUiState.NotRolled(numberOfDice) }
+            combine(
+                preferencesRepository.numberOfDiceFlow,
+                rollDataRepository.lastRollFlow
+            ) { numberOfDice, savedRoll ->
+                if (savedRoll != null && savedRoll.rollData.numberOfDice == numberOfDice) {
+                    RollerUiState.Rolled(savedRoll.rollData, Date(savedRoll.timestamp))
+                } else {
+                    RollerUiState.NotRolled(numberOfDice)
+                }
+            }.collect { state ->
+                _uiState.value = state
             }
         }
     }
 
     fun onRoll() {
-        val rollData: RollData = rollDataRepository.getRandomRollData(uiState.value.numberOfDice)
-        _uiState.update {
-            RollerUiState.Rolled(
-                rollData = rollData, date = Date()
-            )
+        viewModelScope.launch {
+            rollDataRepository.saveRandomRollData(uiState.value.numberOfDice)
         }
     }
 
     fun onReset() {
-        if (uiState.value.numberOfDice != PreferencesRepository.DEFAULT_NUMBER_OF_DICE){
-            viewModelScope.launch {
-                preferencesRepository.saveNumberOfDice(PreferencesRepository.DEFAULT_NUMBER_OF_DICE)
-            }
-        } else if (uiState.value is RollerUiState.Rolled) {
-            _uiState.update { RollerUiState.NotRolled(uiState.value.numberOfDice) }
+        viewModelScope.launch {
+            rollDataRepository.clearRollData()
+            preferencesRepository.saveNumberOfDice(PreferencesRepository.DEFAULT_NUMBER_OF_DICE)
         }
     }
 
     fun onChangeNumberOfDice(newNumberOfDice: Int) {
         if (newNumberOfDice != uiState.value.numberOfDice) {
             viewModelScope.launch {
+                rollDataRepository.clearRollData()
                 preferencesRepository.saveNumberOfDice(newNumberOfDice)
             }
         }
