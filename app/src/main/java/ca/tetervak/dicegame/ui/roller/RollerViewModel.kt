@@ -3,16 +3,19 @@ package ca.tetervak.dicegame.ui.roller
 import androidx.lifecycle.ViewModel
 import ca.tetervak.dicegame.domain.RollData
 import ca.tetervak.dicegame.repository.RollDataRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import java.util.Date
 
-class RollerViewModel : ViewModel() {
+@HiltViewModel
+class RollerViewModel @Inject constructor(
+    private val rollDataRepository: RollDataRepository
+) : ViewModel() {
 
     private val _uiState: MutableStateFlow<RollerUiState> = MutableStateFlow(INIT_STATE)
     val uiState: StateFlow<RollerUiState> = _uiState
-
-    private val rollDataRepository: RollDataRepository = RollDataRepository()
 
     fun onRoll() {
         val rollData: RollData = rollDataRepository.getRandomRollData(uiState.value.numberOfDice)
