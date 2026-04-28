@@ -25,7 +25,7 @@ class RollerViewModel : ViewModel() {
         _uiState.value = INIT_STATE
     }
 
-    fun onChangeOfNumberOfDice(newNumberOfDice: Int) {
+    fun onChangeNumberOfDice(newNumberOfDice: Int) {
         if(newNumberOfDice != _uiState.value.numberOfDice){
             _uiState.value = RollerUiState.NotRolled(newNumberOfDice)
         }

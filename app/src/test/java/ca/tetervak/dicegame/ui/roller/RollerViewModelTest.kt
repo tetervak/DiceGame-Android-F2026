@@ -40,7 +40,7 @@ class RollerViewModelTest {
     @Test
     fun onReset_resetsStateToNotRolledWithThreeDice() {
         // Change state first
-        viewModel.onChangeOfNumberOfDice(5)
+        viewModel.onChangeNumberOfDice(5)
         viewModel.onRoll()
         
         // Reset
@@ -54,9 +54,9 @@ class RollerViewModelTest {
     }
 
     @Test
-    fun onChangeOfNumberOfDice_updatesNumberOfDice() {
+    fun onChangeOfNumberDice_updatesNumberOfDice() {
         val newCount = 5
-        viewModel.onChangeOfNumberOfDice(newCount)
+        viewModel.onChangeNumberOfDice(newCount)
         val state = viewModel.uiState.value
         assertTrue("State should be NotRolled after onChangeOfNumberOfDice()",
             state is RollerUiState.NotRolled)
@@ -65,13 +65,13 @@ class RollerViewModelTest {
     }
 
     @Test
-    fun onChangeOfNumberOfDice_afterRolled_resetsToNotRolled() {
+    fun onChangeNumberOfDice_afterRolled_resetsToNotRolled() {
         viewModel.onRoll()
         assertTrue("State should be Rolled before change",
             viewModel.uiState.value is RollerUiState.Rolled)
         
         val newCount = 4
-        viewModel.onChangeOfNumberOfDice(newCount)
+        viewModel.onChangeNumberOfDice(newCount)
         val state = viewModel.uiState.value
         assertTrue("State should change to NotRolled when number of dice changes",
             state is RollerUiState.NotRolled)
@@ -80,7 +80,7 @@ class RollerViewModelTest {
     }
 
     @Test
-    fun onChangeOfNumberOfDice_sameValue_doesNotResetToNotRolledIfAlreadyRolled() {
+    fun onChangeNumberOfDice_sameValue_doesNotResetToNotRolledIfAlreadyRolled() {
         // Note: The current implementation of onChangeOfNumberOfDice only changes if new != current
         // fun onChangeOfNumberOfDice(newNumberOfDice: Int) {
         //    if(newNumberOfDice != _uiState.value.numberOfDice){
@@ -92,7 +92,7 @@ class RollerViewModelTest {
         val stateBefore = viewModel.uiState.value
         assertTrue(stateBefore is RollerUiState.Rolled)
         
-        viewModel.onChangeOfNumberOfDice(3) // 3 is the current number of dice
+        viewModel.onChangeNumberOfDice(3) // 3 is the current number of dice
         
         val stateAfter = viewModel.uiState.value
         assertTrue("State should remain Rolled if number of dice is the same",
