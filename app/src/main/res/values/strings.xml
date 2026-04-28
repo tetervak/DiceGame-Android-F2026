@@ -8,7 +8,7 @@
     <string name="roll_total_label">Roll Total:</string>
     <string name="dice_image">dice image</string>
     <string name="nav_roller_title">Dice Roller</string>
-    <string name="menu">Menu</string>
+    <string name="about">About</string>
     <string name="number_of_dice">Number of Dice</string>
     <string name="timestamp_pattern">EEE, MMM dd, yyyy - h:mm:ss a</string>
 

@@ -7,7 +7,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Refresh
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -19,7 +18,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -41,9 +39,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import ca.tetervak.dicegame.R
+import ca.tetervak.dicegame.ui.common.DiceGameAbout
 import ca.tetervak.dicegame.ui.roller.NotRolledBody
 import ca.tetervak.dicegame.ui.roller.RolledBody
-import ca.tetervak.dicegame.ui.roller.RollerTopAppBar
+import ca.tetervak.dicegame.ui.common.GameTopAppBar
 import ca.tetervak.dicegame.ui.roller.RollerUiState
 import ca.tetervak.dicegame.ui.roller.RollerViewModel
 
@@ -62,7 +61,8 @@ fun AppRootScreen(
 
     Scaffold(
         topBar = {
-            RollerTopAppBar(
+            GameTopAppBar(
+                title = stringResource(id = R.string.app_name),
                 onHelpButtonClick = { showAboutDialog = true },
                 scrollBehavior = scrollBehavior
             )
@@ -184,24 +184,4 @@ fun NumberOfDiceInput(
         }
     }
 }
-
-@Composable
-fun DiceGameAbout(onDismissRequest: () -> Unit) =
-    AlertDialog(
-        onDismissRequest = onDismissRequest,
-        title = { Text(stringResource(R.string.about_dice_game)) },
-        text = {
-            Text(
-                text = stringResource(R.string.programming_example),
-                fontSize = 18.sp
-            )
-        },
-        confirmButton = {
-            TextButton(
-                onClick = onDismissRequest
-            ) {
-                Text(stringResource(R.string.ok))
-            }
-        }
-    )
 

@@ -1,4 +1,4 @@
-package ca.tetervak.dicegame.ui.roller
+package ca.tetervak.dicegame.ui.common
 
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -17,7 +17,8 @@ import ca.tetervak.dicegame.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RollerTopAppBar(
+fun GameTopAppBar(
+    title: String,
     onHelpButtonClick: () -> Unit,
     scrollBehavior: TopAppBarScrollBehavior
 ) = CenterAlignedTopAppBar(
@@ -30,7 +31,7 @@ fun RollerTopAppBar(
     ),
     title = {
         Text(
-            text = stringResource(id = R.string.app_name),
+            text = title,
             fontSize = 24.sp
         )
     },
@@ -43,7 +44,7 @@ fun RollerTopAppBar(
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.baseline_help_outline_24),
-                contentDescription = stringResource(R.string.menu)
+                contentDescription = stringResource(R.string.about)
             )
         }
     },
