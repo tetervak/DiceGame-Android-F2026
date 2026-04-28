@@ -111,7 +111,7 @@ fun RollerScreen(
     }
 }
 
-@Preview
+@Preview(name = "Roller Screen Not Rolled", showBackground = true)
 @Composable
 fun RollerScreenNotRolledPreview() {
     DiceGameTheme {
@@ -124,7 +124,7 @@ fun RollerScreenNotRolledPreview() {
     }
 }
 
-@Preview
+@Preview(name = "Roller Screen Rolled", showBackground = true)
 @Composable
 fun RollerScreenRolledPreview() {
     DiceGameTheme {
