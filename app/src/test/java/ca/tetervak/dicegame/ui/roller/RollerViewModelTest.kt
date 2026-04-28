@@ -1,31 +1,58 @@
 package ca.tetervak.dicegame.ui.roller
 
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import ca.tetervak.dicegame.repository.PreferencesRepository
+import ca.tetervak.dicegame.repository.RollDataRepository
+import ca.tetervak.dicegame.rules.MainDispatcherRule
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.TemporaryFolder
+import java.io.File
 
-// It is an example of an AI-generated test
+@OptIn(ExperimentalCoroutinesApi::class)
 class RollerViewModelTest {
+
+    @get:Rule
+    val mainDispatcherRule = MainDispatcherRule()
+
+    @get:Rule
+    val temporaryFolder: TemporaryFolder = TemporaryFolder()
 
     private lateinit var viewModel: RollerViewModel
 
-    @Before
-    fun setUp() {
-        viewModel = RollerViewModel()
+    private fun createViewModel(testScope: TestScope) {
+        val dataStore = PreferenceDataStoreFactory.create(
+            scope = testScope,
+            produceFile = { File(temporaryFolder.newFolder(), "test_prefs.preferences_pb") }
+        )
+        viewModel = RollerViewModel(
+            rollDataRepository = RollDataRepository(),
+            preferencesRepository = PreferencesRepository(dataStore)
+        )
     }
 
     @Test
-    fun initialState_isNotRolledWithThreeDice() {
+    fun initialState_isNotRolledWithThreeDice() = runTest {
+        createViewModel(this)
+        advanceUntilIdle() // let init block complete
         val state = viewModel.uiState.value
-        assertTrue("Initial state should be NotRolled",
+        assertTrue("Initial state should be NotRolled, but was ${state::class.simpleName}",
             state is RollerUiState.NotRolled)
         assertEquals("Initial number of dice should be 3",
             3, state.numberOfDice)
     }
 
     @Test
-    fun onRoll_updatesStateToRolled() {
+    fun onRoll_updatesStateToRolled() = runTest {
+        createViewModel(this)
+        advanceUntilIdle()
         viewModel.onRoll()
         val state = viewModel.uiState.value
         assertTrue("State should be Rolled after onRoll()",
@@ -38,13 +65,17 @@ class RollerViewModelTest {
     }
 
     @Test
-    fun onReset_resetsStateToNotRolledWithThreeDice() {
+    fun onReset_resetsStateToNotRolledWithThreeDice() = runTest {
+        createViewModel(this)
+        advanceUntilIdle()
         // Change state first
         viewModel.onChangeNumberOfDice(5)
+        advanceUntilIdle()
         viewModel.onRoll()
         
         // Reset
         viewModel.onReset()
+        advanceUntilIdle()
         
         val state = viewModel.uiState.value
         assertTrue("State should be NotRolled after onReset()",
@@ -54,24 +85,32 @@ class RollerViewModelTest {
     }
 
     @Test
-    fun onChangeOfNumberDice_updatesNumberOfDice() {
+    fun onChangeOfNumberDice_updatesNumberOfDice() = runTest {
+        createViewModel(this)
+        advanceUntilIdle()
         val newCount = 5
         viewModel.onChangeNumberOfDice(newCount)
+        advanceUntilIdle()
+        
         val state = viewModel.uiState.value
-        assertTrue("State should be NotRolled after onChangeOfNumberOfDice()",
+        assertTrue("State should be NotRolled after onChangeOfNumberOfDice(), but was ${state::class.simpleName}",
             state is RollerUiState.NotRolled)
-        assertEquals("Number of dice should be updated to $newCount",
+        assertEquals("Number of dice should be updated to $newCount, but was ${state.numberOfDice}",
             newCount, state.numberOfDice)
     }
 
     @Test
-    fun onChangeNumberOfDice_afterRolled_resetsToNotRolled() {
+    fun onChangeNumberOfDice_afterRolled_resetsToNotRolled() = runTest {
+        createViewModel(this)
+        advanceUntilIdle()
         viewModel.onRoll()
         assertTrue("State should be Rolled before change",
             viewModel.uiState.value is RollerUiState.Rolled)
         
         val newCount = 4
         viewModel.onChangeNumberOfDice(newCount)
+        advanceUntilIdle()
+        
         val state = viewModel.uiState.value
         assertTrue("State should change to NotRolled when number of dice changes",
             state is RollerUiState.NotRolled)
@@ -80,19 +119,15 @@ class RollerViewModelTest {
     }
 
     @Test
-    fun onChangeNumberOfDice_sameValue_doesNotResetToNotRolledIfAlreadyRolled() {
-        // Note: The current implementation of onChangeOfNumberOfDice only changes if new != current
-        // fun onChangeOfNumberOfDice(newNumberOfDice: Int) {
-        //    if(newNumberOfDice != _uiState.value.numberOfDice){
-        //        _uiState.value = RollerUiState.NotRolled(newNumberOfDice)
-        //    }
-        // }
-        
+    fun onChangeNumberOfDice_sameValue_doesNotResetToNotRolledIfAlreadyRolled() = runTest {
+        createViewModel(this)
+        advanceUntilIdle()
         viewModel.onRoll()
         val stateBefore = viewModel.uiState.value
         assertTrue(stateBefore is RollerUiState.Rolled)
         
         viewModel.onChangeNumberOfDice(3) // 3 is the current number of dice
+        advanceUntilIdle()
         
         val stateAfter = viewModel.uiState.value
         assertTrue("State should remain Rolled if number of dice is the same",
