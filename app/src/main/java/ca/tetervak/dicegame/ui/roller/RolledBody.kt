@@ -9,19 +9,20 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import ca.tetervak.dicegame.R
 import ca.tetervak.dicegame.domain.RollData
+import ca.tetervak.dicegame.ui.theme.DeepPurple500
+import ca.tetervak.dicegame.ui.theme.Green500
 import java.util.Date
 
 @Composable
@@ -64,12 +65,12 @@ fun TotalRow(@StringRes labelRes: Int, total: Int, modifier: Modifier = Modifier
     ) {
         Text(
             text = stringResource(labelRes),
-            fontSize = 24.sp
+            style = MaterialTheme.typography.headlineSmall
         )
         Text(
             text = total.toString(),
-            fontSize = 24.sp,
-            color = colorResource(R.color.green_500)
+            style = MaterialTheme.typography.headlineSmall,
+            color = Green500
         )
     }
 }
@@ -88,8 +89,8 @@ fun DiceValuesRow(list: List<Int>, modifier: Modifier = Modifier) {
         for (value in list) {
             Text(
                 text = value.toString(),
-                color = colorResource(R.color.deep_purple_500),
-                fontSize = 56.sp
+                color = DeepPurple500,
+                style = MaterialTheme.typography.displayLarge
             )
         }
     }
@@ -140,7 +141,7 @@ fun DiceImagesRowPreview() {
 fun RollerTimeStamp(date: Date, modifier: Modifier = Modifier) {
     Text(
         text = timeStampFormat(date),
-        fontSize = 18.sp,
+        style = MaterialTheme.typography.titleMedium,
         color = Color.Gray,
         modifier = modifier
     )

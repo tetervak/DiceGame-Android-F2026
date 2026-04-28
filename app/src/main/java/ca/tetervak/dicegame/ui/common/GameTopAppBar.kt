@@ -12,7 +12,6 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.sp
 import ca.tetervak.dicegame.R
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -32,7 +31,7 @@ fun GameTopAppBar(
     title = {
         Text(
             text = title,
-            fontSize = 24.sp
+            style = MaterialTheme.typography.headlineSmall
         )
     },
     actions = {
