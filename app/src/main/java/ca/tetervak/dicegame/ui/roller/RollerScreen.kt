@@ -30,7 +30,6 @@ import ca.tetervak.dicegame.domain.RollData
 import ca.tetervak.dicegame.ui.common.DiceGameAbout
 import ca.tetervak.dicegame.ui.common.GameTopAppBar
 import ca.tetervak.dicegame.ui.theme.DiceGameTheme
-import java.time.LocalDateTime
 import java.util.Date
 
 @OptIn(ExperimentalMaterial3Api::class)
