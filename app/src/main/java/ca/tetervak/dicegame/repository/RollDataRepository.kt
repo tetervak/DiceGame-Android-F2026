@@ -3,11 +3,10 @@ package ca.tetervak.dicegame.repository
 import androidx.datastore.core.DataStore
 import ca.tetervak.dicegame.data.RollDataProto
 import ca.tetervak.dicegame.domain.RollData
+import ca.tetervak.dicegame.domain.SavedRoll
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlin.random.Random
-
-data class SavedRoll(val rollData: RollData, val timestamp: Long)
 
 class RollDataRepository(
     private val random: Random,
