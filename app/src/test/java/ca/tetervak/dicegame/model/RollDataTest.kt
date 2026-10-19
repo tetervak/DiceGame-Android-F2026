@@ -1,4 +1,4 @@
-package ca.tetervak.dicegame.domain
+package ca.tetervak.dicegame.model
 
 import org.junit.After
 import org.junit.Assert.*

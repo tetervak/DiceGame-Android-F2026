@@ -26,7 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ca.tetervak.dicegame.R
-import ca.tetervak.dicegame.domain.RollData
+import ca.tetervak.dicegame.model.RollData
 import ca.tetervak.dicegame.ui.common.DiceGameAbout
 import ca.tetervak.dicegame.ui.common.GameTopAppBar
 import ca.tetervak.dicegame.ui.theme.DiceGameTheme

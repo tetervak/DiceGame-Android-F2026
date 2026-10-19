@@ -1,4 +1,4 @@
-package ca.tetervak.dicegame.repository
+package ca.tetervak.dicegame.data
 
 import org.junit.After
 import org.junit.Assert.*

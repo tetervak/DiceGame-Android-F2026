@@ -1,6 +1,6 @@
-package ca.tetervak.dicegame.repository
+package ca.tetervak.dicegame.data
 
-import ca.tetervak.dicegame.domain.RollData
+import ca.tetervak.dicegame.model.RollData
 import kotlin.random.Random
 
 class RollDataRepository(

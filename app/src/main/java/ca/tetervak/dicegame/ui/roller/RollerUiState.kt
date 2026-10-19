@@ -1,6 +1,6 @@
 package ca.tetervak.dicegame.ui.roller
 
-import ca.tetervak.dicegame.domain.RollData
+import ca.tetervak.dicegame.model.RollData
 import java.util.Date
 
 sealed interface RollerUiState {

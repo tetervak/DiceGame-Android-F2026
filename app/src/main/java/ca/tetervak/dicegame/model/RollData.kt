@@ -1,4 +1,4 @@
-package ca.tetervak.dicegame.domain
+package ca.tetervak.dicegame.model
 
 class RollData(
     val values: List<Int>
