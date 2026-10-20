@@ -7,11 +7,11 @@ import org.junit.Test
 import java.lang.IllegalArgumentException
 import kotlin.random.Random
 
-class RollDataRepositoryTest {
+class LocalRollDataRepositoryTest {
 
     // specifying the seed makes the "random" sequence always the same
     private val random: Random = Random(seed = 10)
-    private val rollDataRepository: RollDataRepository = RollDataRepository(random)
+    private val rollDataRepository: LocalRollDataRepository = LocalRollDataRepository(random)
 
     @Before
     fun setUp() {
