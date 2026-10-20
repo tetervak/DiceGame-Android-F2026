@@ -1,5 +1,6 @@
 package ca.tetervak.dicegame.ui.roller
 
+import ca.tetervak.dicegame.fake.FakeRollDataRepository
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -12,7 +13,7 @@ class RollerViewModelTest {
 
     @Before
     fun setUp() {
-        viewModel = RollerViewModel()
+        viewModel = RollerViewModel(FakeRollDataRepository())
     }
 
     @Test
