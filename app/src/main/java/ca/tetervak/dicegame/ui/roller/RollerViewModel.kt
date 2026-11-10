@@ -5,8 +5,6 @@ import androidx.lifecycle.viewModelScope
 import ca.tetervak.dicegame.domain.RollData
 import ca.tetervak.dicegame.repository.PreferencesRepository
 import ca.tetervak.dicegame.repository.RollDataRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
-import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,8 +12,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.util.Date
 
-@HiltViewModel
-class RollerViewModel @Inject constructor(
+class RollerViewModel(
     private val rollDataRepository: RollDataRepository,
     private val preferencesRepository: PreferencesRepository
 ) : ViewModel() {

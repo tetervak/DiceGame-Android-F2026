@@ -1,15 +1,11 @@
 package ca.tetervak.dicegame.repository
 
 import ca.tetervak.dicegame.domain.RollData
-import javax.inject.Inject
 import kotlin.random.Random
 
 class RollDataRepository(
-    private val random: Random
+    private val random: Random = Random.Default
 ) {
-
-    @Inject
-    constructor(): this(Random.Default)
 
     fun getRandomRollData(numberOfDice: Int): RollData {
         if (numberOfDice <= 0) throw IllegalArgumentException("numberOfDice must be > 0")
